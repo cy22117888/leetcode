@@ -1,0 +1,68 @@
+88、合并两个有序数组
+===
+给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。<br>
+
+说明:<br>
+初始化 nums1 和 nums2 的元素数量分别为 m 和 n。<br>
+你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。<br>
+
+示例:<br>
+
+输入:<br>
+```
+nums1 = [1,2,3,0,0,0], m = 3
+nums2 = [2,5,6],       n = 3
+```
+输出:<br>
+```
+[1,2,2,3,5,6]
+```
+
+``
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/merge-sorted-array
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+``
+
+
+```
+    /** 
+     * 第一种方法：双指针法（从前往后遍历）
+     */
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = 0;
+        int p2 = 0;
+        int count = 0;
+        int [] nums1Copy = new int[m];
+        System.arraycopy(nums1,0,nums1Copy,0,m);
+        while (p1 < m && p2 < n) {
+            if (nums2[p2] > nums1Copy[p1]) {
+                nums1[count++] = nums1Copy[p1++];
+            } else {
+                nums1[count++] = nums2[p2++];
+            }
+        }
+        if (p1 < m)
+            System.arraycopy(nums1Copy, p1, nums1, p1 + p2, m + n - p1 - p2);
+        if (p2 < n)
+            System.arraycopy(nums2, p2, nums1, p1 + p2, m + n - p1 - p2);
+    }
+
+
+   /** 
+     * 第二种方法：双指针法（从后往前遍历插入）
+     */
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = m - 1;
+        int p2 = n - 1;
+        int count = m + n - 1;
+        while (p1 >= 0 && p2 >= 0) {
+            if (nums2[p2] > nums1[p1]) {
+                nums1[count--] = nums2[p2--];
+            } else {
+                nums1[count--] = nums1[p1--];
+            }
+        }
+        System.arraycopy(nums2, 0, nums1, 0,p2 + 1);
+    }
+```
