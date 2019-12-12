@@ -31,29 +31,28 @@ n 是 32 位有符号整数，其数值范围是 [−231, 231 − 1] 。<br>
 ```
 class Solution {
     public double myPow(double x, int n) {
-        if (x == 0) return 0.0;
-        if (x == 1) return 1.0;
-        //指数为负数时，对底数、指数进行数学转换
-        if (n < 0) {
-            x= 1 / x;
-            n = -n;
-        }
-
-        return fastPow(x, n);
+         //特值判定
+         if (x == 0 || n == 1) return x;
+         //当n为下边界时，取反会越界，故用long类型来接收一下
+         long longN = n;
+         // 当n为负数时
+         if (longN < 0) {
+             x = 1 / x;
+             longN = -longN;
+         }
+         //递归
+        return recursion(x, longN);
     }
 
     //递归方法
-    private double fastPow(double x, int n) {
-        if (n == 0) {
-            return 1.0;
-        }
-        double half = fastPow(x, n / 2);
-        if (n % 2 == 0) {
-            return half * half;
-        } else {
-            return half * half * x;
-        }
+    private double recursion(double x, long n) {
+        //定义基准情况
+        if (n == 0) return 1.0;
+        //向下递归
+        double half = recursion(x, n / 2);
+        //定义本层业务逻辑
+        if (n % 2 == 1) return half * half * x;
+        else return half * half;
     }
-    
 }
 ```
