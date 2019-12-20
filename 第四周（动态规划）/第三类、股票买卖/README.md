@@ -29,7 +29,7 @@ dp[i][k][1] = Math.max(dp[i-1][k][1], dp[i-1][k-1][0] - prices[i]);
 
 
 #### 本类中所有动态规划解法的思路来源于以下链接：
-··
+``
 作者：labuladong
 链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/solution/yi-ge-tong-yong-fang-fa-tuan-mie-6-dao-gu-piao-wen/
 来源：力扣（LeetCode）
