@@ -36,33 +36,40 @@ class Trie {
     /** 插入一个单词 */
     public void insert(String word) {
         TrieNode node = root;
+        // 遍历 word，用各个字符填充树的节点
         for (int i = 0; i < word.length(); ++i) {
             char currentChar = word.charAt(i);
+            // 如果不存在当前访问字符的节点，便构建该字符的节点
             if (!node.containsKey(currentChar)) 
                 node.put(currentChar, new TrieNode());
+            // 节点下移
             node = node.get(currentChar);
         }
+        // 填充完节点，将最后一个节点设置为叶子
         node.setBoolEnd();
     }
     
     /** 查找一个单词 */
     public boolean search(String word) {
         TrieNode node = serchPrefix(word);
-        return node != null && node.getBoolEnd();
+        return node != null && node.getBoolEnd();  // 判断非空且word的最后一个字符的节点为以叶子
     }
     
     /** 查找一个前缀 */
     public boolean startsWith(String prefix) {
-        return serchPrefix(prefix) != null;
+        return serchPrefix(prefix) != null;  // 因查找前缀，只判断非空即可
     }
 
     // 定义查找方法
     public TrieNode serchPrefix(String prefix) {
         TrieNode node = root;
+        // 遍历 prefix 查看其各个字符是否存在相应节点 
         for (int i = 0; i < prefix.length(); ++i) {
             char currentChar = prefix.charAt(i);
+            // 如当前访问字符在当前树深存在节点，那么节点下移，继续查看下一个字符
             if (node.containsKey(currentChar))
                 node = node.get(currentChar);
+            // 如不存在，说明 prefix 不在 Trie 中，即没有目标字符串
             else
                 return null;
         }
