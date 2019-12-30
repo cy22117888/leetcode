@@ -23,6 +23,7 @@ trie.search("app");     // 返回 true
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 ``
 
+### Java
 ```
 class Trie {
 
@@ -119,4 +120,46 @@ class Trie {
  * boolean param_2 = obj.search(word);
  * boolean param_3 = obj.startsWith(prefix);
  */
+```
+
+### python 
+```
+class Trie:
+
+    def __init__(self):
+        self.root = {}
+        self.end_with_word = '#'  # 定义叶子节点的标识符
+        
+    # 插入字符串
+    def insert(self, word: str) -> None:
+        node = self.root
+        for i in word:
+            node = node.setdefault(i, {})
+        node[self.end_with_word] = self.end_with_word
+        
+    # 查找字符串
+    def search(self, word: str) -> bool:
+        node = self.root
+        for i in word:
+            if i not in node:
+                return False 
+            node = node[i]
+        return '#' in node
+        
+    # 获取字符串
+    def startsWith(self, prefix: str) -> bool:
+        node = self.root
+        for i in prefix:
+            if i not in node:
+                return False
+            node = node[i]
+        return True
+        
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
 ```
