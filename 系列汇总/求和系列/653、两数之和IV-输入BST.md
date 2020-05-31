@@ -67,5 +67,34 @@ private void traverse(TreeNode root) {
 
 ### 方案2：BST中的极值搜索
 ```
+private TreeNode root;
+private int k;
 
+public boolean findTarget(TreeNode root, int k) {
+    // 思路2：
+    // 递归寻找
+    this.root = root;
+    this.k = k;
+    return dfs(root);
+}
+
+// 深度优先遍历
+private boolean dfs(TreeNode currentNode) {
+    // base case
+    if (currentNode == null) return false;
+    // 当前层逻辑
+    TreeNode node = find(root, k - currentNode.val);
+    if (node != null && node != currentNode) return true;
+    // 向下递归
+    return dfs(currentNode.left) || dfs(currentNode.right);
+}
+
+// 寻找另一个值的底层实现
+private TreeNode find(TreeNode current, int target) {
+    // base case
+    if (current == null) return null;
+    if (target == current.val) return current;
+
+    return target > current.val ? find(current.right, target) : find(current.left, target);
+}
 ```
